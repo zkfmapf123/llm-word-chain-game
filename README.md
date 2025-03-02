@@ -3,6 +3,11 @@
 ## Run ( use Docker ... )
 
 ```sh
+    // swagger
+    swag fmt
+    swag init
+
+    // execute
     make run
     or
     docker-compose up --build -d
