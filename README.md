@@ -45,6 +45,6 @@ CREATE TABLE words (
 
 ## Result
 
-- 0.19 $ 사용 함
+- <b>0.19 $ 사용 함 ... 비싼듯?</b>
 
 ![res](./public/pay.png)
