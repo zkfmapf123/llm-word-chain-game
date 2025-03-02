@@ -42,3 +42,9 @@ CREATE TABLE words (
     UNIQUE(session_id, word) -- 같은 세션에서는 중복 불가
 );
 ```
+
+## Result
+
+- 0.19 $ 사용 함
+
+![res](./public/result.png)
