@@ -47,4 +47,4 @@ CREATE TABLE words (
 
 - 0.19 $ 사용 함
 
-![res](./public/result.png)
+![res](./public/pay.png)
