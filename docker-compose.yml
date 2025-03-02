@@ -9,17 +9,19 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
-      - DB_HOST=db
+      - DB_HOST=pg
       - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=vectordb
+      - OPENAI_API_KEY=[NEEDS TO BE SET]
     depends_on:
       db:
         condition: service_healthy
 
   db:
     image: ankane/pgvector:latest
+    hostname: pg
     ports:
       - "5432:5432"
     environment:

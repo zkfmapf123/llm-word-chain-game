@@ -3,6 +3,7 @@ package config
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
 	_ "github.com/lib/pq"
 )
@@ -13,10 +14,17 @@ type PGConn struct {
 	User     string
 	Password string
 	DBName   string
+	DB       *sql.DB
 }
 
 func NewPGConn() *PGConn {
-	return &PGConn{}
+	return &PGConn{
+		Host:     os.Getenv("DB_HOST"),
+		Port:     os.Getenv("DB_PORT"),
+		User:     os.Getenv("DB_USER"),
+		Password: os.Getenv("DB_PASSWORD"),
+		DBName:   os.Getenv("DB_NAME"),
+	}
 }
 
 func (pg *PGConn) WithHost(host string) *PGConn {
@@ -44,12 +52,17 @@ func (pg *PGConn) WithDBName(dbName string) *PGConn {
 	return pg
 }
 
-func (pg *PGConn) MustConnect() {
+func (pg *PGConn) MustConnect() *PGConn {
 	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", pg.Host, pg.Port, pg.User, pg.Password, pg.DBName)
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		panic(err)
 	}
 
-	defer db.Close()
+	pg.DB = db
+	return pg
+}
+
+func (pg *PGConn) Close() {
+	pg.DB.Close()
 }

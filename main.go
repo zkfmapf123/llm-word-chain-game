@@ -49,7 +49,8 @@ func main() {
 	// api
 	setRouter(app, PREFIX)
 
-	// ...
+	// static
+	// app.Static("/", "./static")
 
 	go func() {
 		if err := app.Listen(":" + PORT); err != nil {
@@ -68,5 +69,13 @@ func main() {
 func setRouter(app *fiber.App, prefix string) {
 	r := app.Group(prefix)
 
-	r.Get("/ping", handlers.PingHandlers)
+	r.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, 끝말잇기 시작!!!")
+	})
+
+	// 게임 세션 시작
+	r.Get("/session", handlers.SessionHandler)
+
+	// 게임 시작
+	r.Post("/play", handlers.UserInputsHandlers)
 }
